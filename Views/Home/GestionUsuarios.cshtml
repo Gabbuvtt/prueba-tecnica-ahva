@@ -1,0 +1,91 @@
+@model PruebaTecnicaAhva.Models.Dashboard.DashboardViewModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Gestión de usuarios";
+}
+
+@section FooterContent {
+    <div style="width:100%; display:flex; justify-content:flex-start; align-items:center;">
+        <partial name="Components/Common/_FooterLogos" />
+    </div>
+}
+
+<div style="width:100%;">
+    <div style="font-size:11px; color:#A8A8A8; margin:0 0 6px 2px;">Gestión de usuarios</div>
+    <h3 style="font-size:35px; margin:0 0 12px 0; color:#232323; font-weight:700;">Gestión de usuarios</h3>
+
+    <div style="display:grid; grid-template-columns:repeat(4, minmax(140px, 1fr)); gap:10px; margin-bottom:12px;">
+        @foreach (var indicator in Model.Indicators)
+        {
+            <div style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:4px; padding:12px;">
+                <div style="font-size:12px; color:#7A7A7A; margin-bottom:4px;">@indicator.Title</div>
+                <div style="font-size:22px; font-weight:700; color:#303030; line-height:1.1;">@indicator.Value</div>
+                <div style="font-size:12px; font-weight:600; color:@(indicator.IsPositiveTrend ? "#2E9D5A" : "#C83737");">@indicator.Trend</div>
+            </div>
+        }
+    </div>
+
+    <div style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="font-size:16px; font-weight:600; color:#303030;">Listado de usuarios</div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <a href="@Url.Action("Buscar", "Home")" style="height:32px; padding:6px 12px; border:1px solid #C6CFDA; color:#4A5A6A; text-decoration:none; border-radius:4px; font-size:12px; background:#FFFFFF;">Buscar usuario</a>
+                <a href="@Url.Action("NuevoUsuario", "Home")" style="height:32px; padding:6px 14px; border:1px solid #0057B8; color:#FFFFFF; border-radius:4px; font-size:12px; background:#0057B8; display:inline-block; text-decoration:none;">Nuevo usuario</a>
+            </div>
+        </div>
+
+        <div style="overflow:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                <thead>
+                    <tr style="background:#F7F8FA; color:#6B7280;">
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Usuario</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Documento</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Rol</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Correo</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Estado</th>
+                        <th style="text-align:right; padding:8px; border:1px solid #ECEFF3;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ECEFF3; color:#2F2F2F; font-weight:600;">@user.FullName</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.DocumentNumber</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.Role</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.Email</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">
+                            <span style="display:inline-block; border-radius:20px; padding:2px 8px; font-size:11px; font-weight:600; background:@(user.Status == "Activo" ? "#ECF8F0" : user.Status.Contains("Bloqueado") ? "#FCECEC" : "#FFF4E0"); color:@(user.Status == "Activo" ? "#239055" : user.Status.Contains("Bloqueado") ? "#B92525" : "#B26B00");">@user.Status</span>
+                        </td>
+                        <td style="padding:8px; border:1px solid #ECEFF3; text-align:right;">
+                            <button type="button" onclick="openUserModal(@user.Id, true)" style="display:inline-block; margin-right:4px; border:1px solid #D3D9E2; border-radius:4px; color:#4B5C6D; background:#FFFFFF; padding:3px 8px; font-size:12px; cursor:pointer;">Ver perfil</button>
+                            <button type="button" onclick="openUserModal(@user.Id, false)" style="border:1px solid #AFC7EC; border-radius:4px; color:#1D5DAD; background:#FFFFFF; padding:3px 8px; margin-right:4px; font-size:12px; cursor:pointer;">Editar</button>
+                            <form asp-action="CambiarEstado" method="post" style="display:inline-block; margin-right:4px; margin-bottom:0;">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" style="border:1px solid #C4C4C4; border-radius:4px; color:#333; background:#F5F5F5; padding:3px 8px; font-size:12px; cursor:pointer;">Cambiar estado</button>
+                            </form>
+                            <button type="button" class="js-delete-user" data-user-name="@user.FullName" style="border:1px solid #F1B4B4; border-radius:4px; color:#B92F2F; background:#FFFFFF; padding:3px 8px;">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.js-delete-user').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const userName = button.getAttribute('data-user-name');
+                if (confirm('Se eliminara el usuario: ' + userName + '. ¿Deseas continuar?')) {
+                    alert('Accion de eliminacion simulada para: ' + userName);
+                }
+            });
+        });
+    </script>
+}
+
+@await Html.PartialAsync("Components/Common/_UserModal")

@@ -1,0 +1,21 @@
+@model IReadOnlyCollection<PruebaTecnicaAhva.Models.Dashboard.DashboardIndicatorViewModel>
+
+<section class="dashboard-section mb-4">
+    <div class="dashboard-section-header">
+        <h4 class="dashboard-section-title mb-0">Resumen de indicadores</h4>
+    </div>
+    <div class="row g-3 mt-1">
+        @foreach (var indicator in Model)
+        {
+            <div class="col-md-6 col-xl-3">
+                <article class="indicator-card">
+                    <p class="indicator-card-title mb-1">@indicator.Title</p>
+                    <p class="indicator-card-value mb-1">@indicator.Value</p>
+                    <span class="indicator-card-trend @(indicator.IsPositiveTrend ? "trend-positive" : "trend-negative")">
+                        @indicator.Trend
+                    </span>
+                </article>
+            </div>
+        }
+    </div>
+</section>

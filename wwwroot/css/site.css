@@ -1,0 +1,417 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.public-layout-body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.public-layout-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #e5e5e5;
+}
+
+.public-layout-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background-color: #e5e5e5;
+}
+
+.public-layout-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.public-layout-footer {
+  flex-shrink: 0;
+}
+
+.public-navbar {
+  background-color: #a31d1d;
+  height: 50px;
+  z-index: 10;
+  position: relative;
+}
+
+.public-navbar-help {
+  cursor: pointer;
+  user-select: none;
+}
+
+.public-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.public-bg-login {
+  background: url('/images/fondo_login.png') no-repeat center center;
+  background-size: cover;
+}
+
+.public-bg-page {
+  background: url('/images/fondo_page.png') no-repeat bottom left;
+  background-size: contain;
+}
+
+.auth-page-stack {
+  gap: 15px;
+}
+
+.auth-page-shell {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.result-page-shell {
+  min-height: 80vh;
+}
+
+.result-card {
+  max-width: 450px;
+  width: 100%;
+}
+
+.result-icon-shell {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.result-icon-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.result-icon-bg {
+  z-index: 1;
+}
+
+.result-icon-main {
+  z-index: 2;
+}
+
+.result-invalid-icon {
+  width: 80px;
+}
+
+.auth-form-card,
+.auth-support-card {
+  width: 376px;
+  border-radius: 8px;
+  border: none;
+}
+
+.search-card {
+  max-width: 450px;
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  background-color: #fff;
+}
+
+.search-form-title {
+  color: #333;
+  font-size: 1.65rem;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.search-form-input,
+.search-form-submit {
+  border-radius: 8px;
+  height: 48px;
+}
+
+.search-form-input {
+  border: 1px solid #ccc;
+}
+
+.search-form-submit,
+.login-submit-button {
+  background-color: #0056b3;
+  border: none;
+}
+
+.document-type-group {
+  height: 40px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.document-type-button {
+  flex: 1;
+  background-color: #fff;
+  color: #6c757d;
+}
+
+.document-type-button:hover {
+  color: #6c757d;
+}
+
+.document-type-button-active {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.dashboard-sidebar {
+  width: 250px;
+  z-index: 1000;
+  background: #fff;
+}
+
+.dashboard-content-shell {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.dashboard-header {
+  height: 60px;
+  border-bottom: 2px solid #a91e22;
+  background: #fff;
+}
+
+.dashboard-main {
+  background-color: #f6f8fb;
+}
+
+.dashboard-footer-content .pie-pagina-logos {
+  justify-content: flex-start;
+  border-top: 0;
+}
+
+.dashboard-nav-link {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.dashboard-nav-link:hover {
+  background-color: #eef3fb;
+  color: #0d6efd;
+}
+
+.admin-notification-dot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 15px;
+}
+
+.dashboard-page-header h3 {
+  font-weight: 700;
+}
+
+.dashboard-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e9eef5;
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-section-title {
+  font-size: 1.05rem;
+  color: #1f2a37;
+}
+
+.indicator-card {
+  border: 1px solid #e6ebf3;
+  border-radius: 10px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.indicator-card-title {
+  color: #667085;
+  font-size: 0.9rem;
+}
+
+.indicator-card-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.indicator-card-trend {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.trend-positive {
+  color: #0f9d58;
+}
+
+.trend-negative {
+  color: #c5221f;
+}
+
+.users-table-wrapper {
+  margin-top: 1rem;
+}
+
+.users-table thead th {
+  font-size: 0.85rem;
+  color: #667085;
+  font-weight: 600;
+}
+
+.status-pill {
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.status-activo {
+  background: #e7f8ee;
+  color: #0f9d58;
+}
+
+.status-bloqueado {
+  background: #fdeaea;
+  color: #c5221f;
+}
+
+.status-pendiente {
+  background: #fff4dd;
+  color: #b57600;
+}
+
+.profile-card .nav-tabs .nav-link.active {
+  font-weight: 600;
+}
+
+.pie-pagina-logos {
+  background-color: #fff;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #e2e8f0;
+  box-sizing: border-box;
+}
+
+.grupo-footer-bloques {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  gap: 0;
+  margin: 0 40px;
+}
+
+.box-base {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.box-escudo {
+  width: 47.1px;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+}
+
+.box-peru {
+  width: 47.1px;
+}
+
+.box-institucional {
+  width: 141.3px;
+  justify-content: left;
+  margin: 1px;
+}
+
+.footer-logo-escudo {
+  height: 28px;
+}
+
+.footer-logo-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.footer-logo-peru {
+  height: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-logo-institucional {
+  height: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.sidebar-icon-link {
+  transition: all 0.2s ease;
+}
+
+.sidebar-icon-link:hover,
+.sidebar-icon-link.active {
+  background: #fff0f1 !important;
+  border-color: #a91e22 !important;
+  box-shadow: 0 0 0 1px rgba(169, 30, 34, 0.12);
+}
+
+.input-validation-error {
+  border-color: #dc3545 !important;
+}
+.field-validation-error::before {
+  content: "• ";
+  color: #dc3545;
+  font-weight: bold;
+}

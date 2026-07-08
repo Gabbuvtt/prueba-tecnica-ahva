@@ -1,0 +1,111 @@
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Perfil de usuario";
+}
+@model PruebaTecnicaAhva.Models.Entities.Usuario
+
+@section FooterContent {
+    <div style="width:100%; display:flex; justify-content:flex-start; align-items:center;">
+        <partial name="Components/Common/_FooterLogos" />
+    </div>
+}
+
+<div style="width:100%;">
+    <div style="font-size:11px; color:#A8A8A8; margin:0 0 6px 2px;">Perfil de usuario</div>
+    <h3 style="font-size:35px; margin:0 0 10px 0; color:#232323; font-weight:700;">Perfil de usuario</h3>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <form asp-action="PerfilUsuario" method="post" style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px 14px 18px 14px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div style="display:flex; align-items:flex-start; gap:12px; margin-bottom:10px;">
+            <div style="position:relative; width:58px; height:58px; border-radius:50%; overflow:hidden; flex-shrink:0;">
+                <img src="~/images/fondo_perfil.png" alt="Fondo" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                <img src="~/images/foto_perfil.png" alt="Avatar usuario" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:2;">
+            </div>
+            <div>
+                <div style="font-size:20px; font-weight:600; color:#323232;">
+                    @Model.PrimerApellido @Model.SegundoApellido, @Model.Nombres
+                    <span style="background:#ECF7F0; color:#3BA26A; font-size:10px; font-weight:600; padding:2px 6px; border-radius:2px; margin-left:6px;">@Model.Estado</span>
+                </div>
+                <div style="font-size:14px; color:#6D6D6D;">Administrador de Recursos</div>
+                <div style="font-size:12px; color:#B4B4B4;">011 Ministerio de Salud</div>
+            </div>
+        </div>
+
+        <div style="display:flex; border-bottom:1px solid #E4E6EA; margin-bottom:10px;">
+            <div style="flex:1; text-align:center; padding:8px 0; font-size:12px; color:#136FA9; border-bottom:2px solid #1D82C1; font-weight:600;">Información básica</div>
+            <div style="flex:1; text-align:center; padding:8px 0; font-size:12px; color:#999999;">Responsabilidades</div>
+            <div style="flex:1; text-align:center; padding:8px 0; font-size:12px; color:#999999;">Historial de responsabilidades</div>
+        </div>
+
+        <div class="row g-2" style="margin:0;">
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Nombres</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.Nombres</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Primer Apellido</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.PrimerApellido</div>
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Segundo Apellido</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.SegundoApellido</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Tipo de Documento de Identidad</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.TipoDocumento</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">N° de Documento de Identidad</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.NumeroDocumento</div>
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Fecha de nacimiento</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.FechaNacimiento.ToString("dd / MM / yyyy")</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Nacionalidad</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.Nacionalidad</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Sexo</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.Sexo</div>
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Correo electrónico principal</div>
+                <input asp-for="CorreoPrincipal" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Correo electrónico secundario <span style="color:#B9B9B9;">(Opcional)</span></div>
+                <input asp-for="CorreoSecundario" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Teléfono Móvil</div>
+                <input asp-for="TelefonoMovil" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Teléfono secundario <span style="color:#B9B9B9;">(Opcional)</span></div>
+                <input asp-for="TelefonoSecundario" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Tipo de Contratación</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.TipoContratacion</div>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Fecha de contratación</div>
+                <div style="height:28px; background:#F7F7F7; border:1px solid #EFEFEF; padding:5px 8px; font-size:12px;">@Model.FechaContratacion.ToString("dd / MM / yyyy")</div>
+            </div>
+        </div>
+        <div style="margin-top:20px; display:flex; justify-content:flex-end;">
+            <button type="submit" class="btn btn-primary btn-sm" style="background:#0057B8; border:none; padding:6px 16px; border-radius:4px;">Guardar Cambios</button>
+        </div>
+    </form>
+</div>

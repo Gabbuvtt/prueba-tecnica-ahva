@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Suspension";
+    Layout = "_Layout";
+}
+
+<div class="public-bg public-bg-login"></div>
+
+<div class="d-flex justify-content-center align-items-center result-page-shell">
+    <div class="card shadow-lg p-5 border-0 rounded-4 text-center result-card">
+        
+        <div class="mb-4 mx-auto result-icon-shell">
+            
+            <img src="~/images/soporte.png" 
+                class="result-icon-layer result-icon-main"
+                alt="Cohete">
+                
+        </div>
+
+        <h2 class="fw-bold mb-5">Cuenta Bloqueada <br> temporalmente</h2>
+        <p class="text-muted mb-4">Has excedido el número máximo de intentos 
+        fallidos (5). Por medidas de seguridad, tu cuenta ha sido
+        bloqueada durante 1 minuto. Intenta
+        nuevamente más tarde.</p>
+        <a href="/Home/IniciarSesion" class="btn btn-primary w-100 py-2">Volver al Inicio de Sesión</a>
+    </div>
+</div>

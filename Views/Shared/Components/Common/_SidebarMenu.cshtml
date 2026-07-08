@@ -1,0 +1,41 @@
+@{
+    var currentAction = (ViewContext.RouteData.Values["Action"]?.ToString() ?? string.Empty).ToLowerInvariant();
+}
+
+<div style="height:100%; display:flex; flex-direction:column; align-items:center; padding-top:8px;">
+    <!-- toggle btn moved to header -->
+
+    <a href="@Url.Action("Dashboard", "Home")"
+       title="Inicio"
+       class="sidebar-icon-link @(currentAction == "dashboard" ? "active" : string.Empty)"
+       style="width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; text-decoration:none; background:#FFFFFF; border:1px solid #ECECEC;">
+        <img src="~/images/inicio.png" width="16" alt="">
+    </a>
+
+    @if (User.IsInRole("Operador"))
+    {
+        <a href="@Url.Action("GestionUsuarios", "Home")"
+           title="Gestión"
+           class="sidebar-icon-link @(currentAction == "gestionusuarios" ? "active" : string.Empty)"
+           style="width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; text-decoration:none; background:#FFFFFF; border:1px solid #ECECEC;">
+            <img src="~/images/edificio.png" width="16" alt="">
+        </a>
+    }
+
+    <a href="@Url.Action("PerfilUsuario", "Home")"
+       title="Perfil"
+       class="sidebar-icon-link @(currentAction == "perfilusuario" ? "active" : string.Empty)"
+       style="width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; text-decoration:none; background:#FFFFFF; border:1px solid #ECECEC;">
+        <img src="~/images/pagina.png" width="16" alt="">
+    </a>
+
+    @if (User.IsInRole("Operador"))
+    {
+        <a href="@Url.Action("Buscar", "Home")"
+           title="Buscar"
+           class="sidebar-icon-link @(currentAction == "buscar" ? "active" : string.Empty)"
+           style="width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; text-decoration:none; background:#FFFFFF; border:1px solid #ECECEC;">
+            <img src="~/images/lupa.png" width="16" alt="">
+        </a>
+    }
+</div>

@@ -1,0 +1,18 @@
+@model PruebaTecnicaAhva.Models.Auth.UserSearchViewModel
+
+<h3 class="fw-bold mb-3 search-form-title">
+    Estado de Usuario
+</h3>
+<p class="text-muted small mb-4 text-center">Ingresa tu documento para verificar el estado de tu perfil.</p>
+
+<form id="formVerificacion" asp-action="ActivacionCuenta" asp-controller="Home" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+    <div class="mb-3">
+        <input asp-for="DocumentNumber" class="form-control form-control-lg text-center search-form-input" placeholder="Numero de DNI o CE">
+        <span asp-validation-for="DocumentNumber" class="text-danger small"></span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold search-form-submit">
+        Consultar Estado
+    </button>
+</form>

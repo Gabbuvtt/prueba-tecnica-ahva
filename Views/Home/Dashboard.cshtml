@@ -1,0 +1,93 @@
+@model PruebaTecnicaAhva.Models.Dashboard.DashboardViewModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Dashboard";
+}
+
+@section FooterContent {
+    <div style="width:100%; display:flex; justify-content:flex-start; align-items:center;">
+        <partial name="Components/Common/_FooterLogos" />
+    </div>
+}
+
+<div style="width:100%;">
+    <div style="font-size:11px; color:#A8A8A8; margin:0 0 6px 2px;">Panel principal</div>
+    <h3 style="font-size:35px; margin:0 0 12px 0; color:#232323; font-weight:700;">Dashboard</h3>
+
+    @if (User.IsInRole("Operador"))
+    {
+        <div style="display:grid; grid-template-columns:repeat(4, minmax(140px, 1fr)); gap:10px; margin-bottom:12px;">
+            @foreach (var indicator in Model.Indicators)
+            {
+                <div style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:4px; padding:12px;">
+                    <div style="font-size:12px; color:#7A7A7A; margin-bottom:4px;">@indicator.Title</div>
+                    <div style="font-size:22px; font-weight:700; color:#303030; line-height:1.1;">@indicator.Value</div>
+                    <div style="font-size:12px; font-weight:600; color:@(indicator.IsPositiveTrend ? "#2E9D5A" : "#C83737");">@indicator.Trend</div>
+                </div>
+            }
+        </div>
+
+        <div style="display:flex; gap:16px;">
+            <div style="flex:1; background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px;">
+                <div style="font-size:16px; font-weight:600; color:#303030; margin-bottom:6px;">Accesos rapidos</div>
+                <p style="font-size:12px; color:#6B7280; margin:0 0 10px 0;">Atajos para los modulos principales de administracion.</p>
+                <div style="display:flex; gap:8px;">
+                    <a href="@Url.Action("GestionUsuarios", "Home")" style="height:32px; padding:6px 12px; border:1px solid #0057B8; color:#FFFFFF; text-decoration:none; border-radius:4px; font-size:12px; background:#0057B8;">Ir a gestión</a>
+                    <a href="@Url.Action("Buscar", "Home")" style="height:32px; padding:6px 12px; border:1px solid #C6CFDA; color:#4A5A6A; text-decoration:none; border-radius:4px; font-size:12px; background:#FFFFFF;">Ir a buscar</a>
+                    <a href="@Url.Action("PerfilUsuario", "Home")" style="height:32px; padding:6px 12px; border:1px solid #C6CFDA; color:#4A5A6A; text-decoration:none; border-radius:4px; font-size:12px; background:#FFFFFF;">Ir a perfil</a>
+                </div>
+            </div>
+            
+            <div style="flex:1; background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px;">
+                <div style="font-size:16px; font-weight:600; color:#303030; margin-bottom:6px;">Enviar Notificación</div>
+                <form asp-action="EnviarNotificacion" asp-controller="Home" method="post" style="display:flex; gap:8px; align-items:center;">
+                    <select name="usuarioId" class="form-select form-select-sm" style="max-width:200px;" required>
+                        <option value="">Seleccione usuario...</option>
+                        @foreach (var user in Model.Users)
+                        {
+                            <option value="@user.Id">@user.FullName</option>
+                        }
+                    </select>
+                    <input type="text" name="mensaje" class="form-control form-control-sm" placeholder="Mensaje..." required />
+                    <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:300px; background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px;">
+                <div style="font-size:16px; font-weight:600; color:#303030; margin-bottom:6px;">Mis Responsabilidades</div>
+                <ul style="font-size:13px; color:#6B7280; padding-left:20px;">
+                    <li>Revisar mi información personal en la sección de Perfil.</li>
+                    <li>Notificar de cualquier cambio en mi contrato.</li>
+                    <li>Mantener una buena conducta.</li>
+                </ul>
+                <div style="display:flex; gap:8px; margin-top:14px;">
+                    <a href="@Url.Action("PerfilUsuario", "Home")" style="height:32px; padding:6px 12px; border:1px solid #0057B8; color:#FFFFFF; text-decoration:none; border-radius:4px; font-size:12px; background:#0057B8;">Ver mi perfil</a>
+                </div>
+            </div>
+
+            <div style="flex:1; min-width:300px; background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px;">
+                <div style="font-size:16px; font-weight:600; color:#303030; margin-bottom:10px;">Notificaciones Recibidas</div>
+                @if (Model.Notificaciones.Any())
+                {
+                    <div style="display:flex; flex-direction:column; gap:8px; max-height:200px; overflow-y:auto;">
+                        @foreach (var notificacion in Model.Notificaciones)
+                        {
+                            <div style="padding:10px; border-left:3px solid #0057B8; background:#F4F5F7; border-radius:0 4px 4px 0;">
+                                <div style="font-size:11px; color:#888;">@notificacion.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</div>
+                                <div style="font-size:13px; color:#333; margin-top:2px;">@notificacion.Mensaje</div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p style="font-size:13px; color:#6B7280; font-style:italic;">No tienes notificaciones recientes.</p>
+                }
+            </div>
+        </div>
+    }
+</div>

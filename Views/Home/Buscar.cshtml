@@ -1,0 +1,80 @@
+@model PruebaTecnicaAhva.Models.Dashboard.DashboardViewModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Buscar";
+    var criterioActual = (ViewBag.Criterio as string ?? "dni").ToLowerInvariant();
+    var terminoActual = ViewBag.Termino as string ?? string.Empty;
+}
+
+@section FooterContent {
+    <div style="width:100%; display:flex; justify-content:flex-start; align-items:center;">
+        <partial name="Components/Common/_FooterLogos" />
+    </div>
+}
+
+<div style="width:100%;">
+    <div style="font-size:11px; color:#A8A8A8; margin:0 0 6px 2px;">Búsqueda de usuarios</div>
+    <h3 style="font-size:35px; margin:0 0 12px 0; color:#232323; font-weight:700;">Buscar usuarios</h3>
+
+    <div style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:12px; margin-bottom:12px;">
+        <form method="get" asp-action="Buscar" asp-controller="Home" style="display:flex; gap:8px; align-items:end; flex-wrap:wrap;">
+            <div style="min-width:170px;">
+                <label style="display:block; font-size:11px; color:#7C7C7C; margin-bottom:4px;">Criterio</label>
+                <select name="criterio" id="criterio" class="form-select" style="height:34px; width:100%; border:1px solid #CED4DA; border-radius:4px; padding:0 8px; font-size:12px;">
+                    @if (ViewBag.Criterio == "ce")
+                    {
+                        <option value="dni">DNI</option>
+                        <option value="ce" selected>Carné de Extranjería</option>
+                    }
+                    else
+                    {
+                        <option value="dni" selected>DNI</option>
+                        <option value="ce">Carné de Extranjería</option>
+                    }
+                </select>
+            </div>
+            <div style="flex:1; min-width:260px;">
+                <label style="display:block; font-size:11px; color:#7C7C7C; margin-bottom:4px;">Búsqueda</label>
+                <input type="text" name="termino" value="@terminoActual" placeholder="Ingresa DNI, CE o nombre completo" style="height:34px; width:100%; border:1px solid #CED4DA; border-radius:4px; padding:0 10px; font-size:12px;">
+            </div>
+            <div>
+                <button type="submit" style="height:34px; border:1px solid #0057B8; color:#FFFFFF; background:#0057B8; border-radius:4px; padding:0 16px; font-size:12px;">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:12px;">
+        <div style="font-size:16px; font-weight:600; color:#303030; margin-bottom:10px;">Resultados</div>
+        <div style="overflow:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                <thead>
+                    <tr style="background:#F7F8FA; color:#6B7280;">
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Usuario</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Documento</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Rol</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Correo</th>
+                        <th style="text-align:left; padding:8px; border:1px solid #ECEFF3;">Estado</th>
+                        <th style="text-align:right; padding:8px; border:1px solid #ECEFF3;">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ECEFF3; color:#2F2F2F; font-weight:600;">@user.FullName</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.DocumentNumber</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.Role</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.Email</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3;">@user.Status</td>
+                        <td style="padding:8px; border:1px solid #ECEFF3; text-align:right;">
+                            <button type="button" onclick="openUserModal(@user.Id, true)" style="display:inline-block; border:1px solid #D3D9E2; border-radius:4px; color:#4B5C6D; background:#FFFFFF; padding:3px 8px; cursor:pointer;">Ver perfil</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Components/Common/_UserModal")

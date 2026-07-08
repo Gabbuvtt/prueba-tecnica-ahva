@@ -1,0 +1,59 @@
+@model PruebaTecnicaAhva.Models.Auth.LoginRequestViewModel
+
+<div class="btn-group w-100 mb-4 document-type-group" role="group">
+    <button type="button" id="btnDni" class="btn document-type-button document-type-button-active" onclick="toggleSelection('DNI')">DNI</button>
+    <button type="button" id="btnCe" class="btn document-type-button" onclick="toggleSelection('CE')">CE</button>
+</div>
+
+<form asp-action="IniciarSesion" asp-controller="Home" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="DocumentType" id="documentTypeInput" />
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+    <div class="mb-3">
+        <label class="form-label small text-muted">Usuario</label>
+        <div class="input-group">
+            <span class="input-group-text bg-white"><img src="~/images/user.png" width="16" alt=""></span>
+            <input asp-for="Username" type="text" class="form-control" placeholder="46844596">
+        </div>
+        <span asp-validation-for="Username" class="text-danger small"></span>
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label small text-muted">Contraseña</label>
+        <div class="input-group">
+            <span class="input-group-text bg-white"><img src="~/images/password.png" width="16" alt=""></span>
+            <input asp-for="Password" type="password" id="passInput" class="form-control" placeholder="********">
+            <button class="btn btn-outline-light border" type="button" onclick="togglePass()">
+                <img src="~/images/see_password.png" width="16" alt="">
+            </button>
+        </div>
+        <span asp-validation-for="Password" class="text-danger small"></span>
+    </div>
+
+    <a href="#" class="small text-decoration-none">¿Olvidó su contraseña?</a>
+
+    <button type="submit" class="btn btn-primary w-100 mt-4 login-submit-button">Ingresar</button>
+</form>
+
+<script>
+    function togglePass() {
+        const input = document.getElementById('passInput');
+        input.type = (input.type === 'password') ? 'text' : 'password';
+    }
+
+    function toggleSelection(selected) {
+        const btnDni = document.getElementById('btnDni');
+        const btnCe = document.getElementById('btnCe');
+        const hiddenInput = document.getElementById('documentTypeInput');
+
+        if (selected === 'DNI') {
+            btnDni.classList.add('document-type-button-active');
+            btnCe.classList.remove('document-type-button-active');
+        } else {
+            btnCe.classList.add('document-type-button-active');
+            btnDni.classList.remove('document-type-button-active');
+        }
+
+        hiddenInput.value = selected;
+    }
+</script>

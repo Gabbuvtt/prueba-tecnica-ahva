@@ -1,0 +1,114 @@
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Nuevo usuario";
+}
+@model PruebaTecnicaAhva.Models.Entities.Usuario
+
+@section FooterContent {
+    <div style="width:100%; display:flex; justify-content:flex-start; align-items:center;">
+        <partial name="Components/Common/_FooterLogos" />
+    </div>
+}
+
+<div style="width:100%;">
+    <div style="font-size:11px; color:#A8A8A8; margin:0 0 6px 2px;">Gestión de usuarios</div>
+    <h3 style="font-size:35px; margin:0 0 10px 0; color:#232323; font-weight:700;">Nuevo usuario</h3>
+
+    <form asp-action="NuevoUsuario" method="post" style="background:#FFFFFF; border:1px solid #E6E7E9; border-radius:2px; padding:14px 14px 18px 14px;">
+        @Html.AntiForgeryToken()
+        
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div style="background:#FEE2E2; border:1px solid #F87171; color:#991B1B; padding:8px 12px; border-radius:4px; font-size:12px; margin-bottom:10px;">
+                @Html.ValidationSummary(false, "", new { @style = "margin-bottom:0; padding-left:16px;" })
+            </div>
+        }
+
+        <div style="display:flex; border-bottom:1px solid #E4E6EA; margin-bottom:10px;">
+            <div style="flex:1; text-align:center; padding:8px 0; font-size:12px; color:#136FA9; border-bottom:2px solid #1D82C1; font-weight:600;">Información básica</div>
+        </div>
+
+        <div class="row g-2" style="margin:0;">
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Nombres</div>
+                <input asp-for="Nombres" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Primer Apellido</div>
+                <input asp-for="PrimerApellido" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Segundo Apellido</div>
+                <input asp-for="SegundoApellido" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Tipo de Documento de Identidad</div>
+                <select asp-for="TipoDocumento" class="form-select form-select-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required>
+                    <option value="DNI">DNI</option>
+                    <option value="CE">CE</option>
+                </select>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">N° de Documento de Identidad</div>
+                <input asp-for="NumeroDocumento" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Fecha de nacimiento</div>
+                <input type="date" asp-for="FechaNacimiento" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Nacionalidad</div>
+                <select asp-for="Nacionalidad" class="form-select form-select-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required>
+                    <option value="">Seleccione...</option>
+                    <option value="Peruana">Peruana</option>
+                    <option value="Venezolana">Venezolana</option>
+                    <option value="Colombiana">Colombiana</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chilena">Chilena</option>
+                    <option value="Ecuatoriana">Ecuatoriana</option>
+                    <option value="Boliviana">Boliviana</option>
+                    <option value="Otra">Otra</option>
+                </select>
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Sexo</div>
+                <select asp-for="Sexo" class="form-select form-select-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                </select>
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Correo electrónico principal</div>
+                <input asp-for="CorreoPrincipal" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Correo electrónico secundario <span style="color:#B9B9B9;">(Opcional)</span></div>
+                <input asp-for="CorreoSecundario" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Teléfono Móvil</div>
+                <input asp-for="TelefonoMovil" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Teléfono secundario <span style="color:#B9B9B9;">(Opcional)</span></div>
+                <input asp-for="TelefonoSecundario" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" />
+            </div>
+            <div class="col-md-4" style="padding:0 6px 0 0;">
+                <div style="font-size:11px; color:#868686;">Tipo de Contratación</div>
+                <input asp-for="TipoContratacion" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 6px;">
+                <div style="font-size:11px; color:#868686;">Fecha de contratación</div>
+                <input type="date" asp-for="FechaContratacion" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+            <div class="col-md-4" style="padding:0 0 0 6px;">
+                <div style="font-size:11px; color:#868686;">Contraseña</div>
+                <input type="password" asp-for="Contrasena" class="form-control form-control-sm" style="height:28px; font-size:12px; border:1px solid #D9DEE5;" required />
+            </div>
+        </div>
+        <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:8px;">
+            <a href="@Url.Action("GestionUsuarios", "Home")" class="btn btn-secondary btn-sm" style="padding:6px 16px; border-radius:4px;">Cancelar</a>
+            <button type="submit" class="btn btn-primary btn-sm" style="background:#0057B8; border:none; padding:6px 16px; border-radius:4px;">Guardar Usuario</button>
+        </div>
+    </form>
+</div>

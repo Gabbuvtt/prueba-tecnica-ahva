@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "_Layout";
+}
+@model PruebaTecnicaAhva.Models.Auth.LoginRequestViewModel
+
+<div class="public-bg public-bg-login"></div>
+
+@if (ViewBag.Timeout == true || Context.Request.Query["timeout"] == "true")
+{
+    <div id="timeoutToast" style="position:fixed; bottom: 85px; right: 50px; background:#E0F2FE; border:1px solid #7DD3FC; border-radius:6px; padding:16px; display:flex; align-items:center; gap:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); z-index:9999; width: 484px; height: 64px; transition: opacity 0.5s ease; opacity: 1;">
+        <div style="background:#0284C7; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="color:#FFF; font-weight:bold; font-size:12px; font-family:serif;">i</span>
+        </div>
+        <div style="font-size:12px; color:#0369A1; font-weight: 500;">
+            Su sesión ha expirado debido a inactividad. Por favor, inicie sesión nuevamente.
+        </div>
+    </div>
+}
+
+<div class="d-flex flex-column align-items-center auth-page-stack">
+    <div class="card shadow-sm auth-form-card">
+        <div class="p-4">
+            <partial name="Components/Auth/_LoginForm" model="Model" />
+        </div>
+    </div>
+
+    <div class="card shadow-sm auth-support-card">
+        <div class="p-3 d-flex align-items-center justify-content-center">
+            <img src="~/images/soporte.png" width="42" class="me-2" alt="">
+            <span class="small text-muted">¿Necesita ayuda?,  <a href="#"> contacte con el <br>área de soporte.</a></span>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

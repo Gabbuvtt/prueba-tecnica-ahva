@@ -1,0 +1,43 @@
+@model IReadOnlyCollection<PruebaTecnicaAhva.Models.Users.UserListItemViewModel>
+
+<section class="dashboard-section">
+    <div class="dashboard-section-header">
+        <h4 class="dashboard-section-title mb-0">Gestión de usuarios</h4>
+    </div>
+
+    <div class="table-responsive users-table-wrapper">
+        <table class="table align-middle users-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Documento</th>
+                    <th>Rol</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">@user.FullName</td>
+                        <td>@user.DocumentNumber</td>
+                        <td>@user.Role</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <span class="status-pill @($"status-{user.Status.ToLowerInvariant()}")">@user.Status</span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("PerfilUsuario", "Home", new { id = user.Id })">Ver perfil</a>
+                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("GestionUsuarios", "Home", new { id = user.Id })">Editar</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger js-delete-user" data-user-name="@user.FullName">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

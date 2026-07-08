@@ -1,0 +1,151 @@
+<!-- User Profile Modal -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Perfil de Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="userProfileForm">
+                    <input type="hidden" id="modalUserId" />
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Nombres</label>
+                            <input type="text" class="form-control form-control-sm" id="modalNombres" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Primer Apellido</label>
+                            <input type="text" class="form-control form-control-sm" id="modalPrimerApellido" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Segundo Apellido</label>
+                            <input type="text" class="form-control form-control-sm" id="modalSegundoApellido" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Tipo Documento</label>
+                            <input type="text" class="form-control form-control-sm" id="modalTipoDocumento" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Número Documento</label>
+                            <input type="text" class="form-control form-control-sm" id="modalNumeroDocumento" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control form-control-sm" id="modalFechaNacimiento" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Nacionalidad</label>
+                            <input type="text" class="form-control form-control-sm" id="modalNacionalidad" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Sexo</label>
+                            <select class="form-select form-select-sm" id="modalSexo">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Correo Principal</label>
+                            <input type="email" class="form-control form-control-sm" id="modalCorreoPrincipal" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Correo Secundario</label>
+                            <input type="email" class="form-control form-control-sm" id="modalCorreoSecundario" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Teléfono Móvil</label>
+                            <input type="text" class="form-control form-control-sm" id="modalTelefonoMovil" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Teléfono Secundario</label>
+                            <input type="text" class="form-control form-control-sm" id="modalTelefonoSecundario" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Tipo Contratación</label>
+                            <input type="text" class="form-control form-control-sm" id="modalTipoContratacion" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-size:11px; color:#868686;">Fecha Contratación</label>
+                            <input type="date" class="form-control form-control-sm" id="modalFechaContratacion" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveModal" onclick="saveUserModal()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let userModalInstance = null;
+
+    function openUserModal(id, readOnly) {
+        if (!userModalInstance) {
+            userModalInstance = new bootstrap.Modal(document.getElementById('userProfileModal'));
+        }
+
+        fetch(`/Home/GetUsuario/${id}`)
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('modalUserId').value = data.id;
+                document.getElementById('modalNombres').value = data.nombres;
+                document.getElementById('modalPrimerApellido').value = data.primerApellido;
+                document.getElementById('modalSegundoApellido').value = data.segundoApellido;
+                document.getElementById('modalTipoDocumento').value = data.tipoDocumento;
+                document.getElementById('modalNumeroDocumento').value = data.numeroDocumento;
+                document.getElementById('modalFechaNacimiento').value = data.fechaNacimiento.split('T')[0];
+                document.getElementById('modalNacionalidad').value = data.nacionalidad;
+                document.getElementById('modalSexo').value = data.sexo;
+                document.getElementById('modalCorreoPrincipal').value = data.correoPrincipal;
+                document.getElementById('modalCorreoSecundario').value = data.correoSecundario;
+                document.getElementById('modalTelefonoMovil').value = data.telefonoMovil;
+                document.getElementById('modalTelefonoSecundario').value = data.telefonoSecundario;
+                document.getElementById('modalTipoContratacion').value = data.tipoContratacion;
+                document.getElementById('modalFechaContratacion').value = data.fechaContratacion.split('T')[0];
+
+                document.getElementById('modalTitle').innerText = readOnly ? "Ver Perfil de Usuario" : "Editar Perfil de Usuario";
+                document.getElementById('btnSaveModal').style.display = readOnly ? 'none' : 'inline-block';
+
+                const inputs = document.querySelectorAll('#userProfileForm input, #userProfileForm select');
+                inputs.forEach(i => i.disabled = readOnly);
+
+                userModalInstance.show();
+            });
+    }
+
+    function saveUserModal() {
+        const formData = {
+            id: document.getElementById('modalUserId').value,
+            nombres: document.getElementById('modalNombres').value,
+            primerApellido: document.getElementById('modalPrimerApellido').value,
+            segundoApellido: document.getElementById('modalSegundoApellido').value,
+            tipoDocumento: document.getElementById('modalTipoDocumento').value,
+            numeroDocumento: document.getElementById('modalNumeroDocumento').value,
+            fechaNacimiento: document.getElementById('modalFechaNacimiento').value,
+            nacionalidad: document.getElementById('modalNacionalidad').value,
+            sexo: document.getElementById('modalSexo').value,
+            correoPrincipal: document.getElementById('modalCorreoPrincipal').value,
+            correoSecundario: document.getElementById('modalCorreoSecundario').value,
+            telefonoMovil: document.getElementById('modalTelefonoMovil').value,
+            telefonoSecundario: document.getElementById('modalTelefonoSecundario').value,
+            tipoContratacion: document.getElementById('modalTipoContratacion').value,
+            fechaContratacion: document.getElementById('modalFechaContratacion').value
+        };
+
+        fetch('/Home/UpdateUsuarioAdmin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+</script>
