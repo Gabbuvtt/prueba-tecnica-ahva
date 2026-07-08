@@ -101,7 +101,7 @@ public class HomeController : Controller
             user.IntentosFallidos++;
             if (user.IntentosFallidos >= 5)
             {
-                user.BloqueadoHasta = DateTime.Now.AddMinutes(1);
+                user.BloqueadoHasta = DateTime.Now.AddMinutes(15);
                 user.IntentosFallidos = 0;
                 await _dbContext.SaveChangesAsync();
                 await _emailService.SendAccountLockedEmailAsync(user.CorreoPrincipal ?? "correo@desconocido.com");
